@@ -1,4 +1,6 @@
-﻿class UnitTest {
+class UnitTest {
+  #Include .Assert.ahk2
+  #Include .Config.ahk2
   #Include .CuiReporter.ahk2
   #Include .TestResult.ahk2
   #Include .TestResults.ahk2
