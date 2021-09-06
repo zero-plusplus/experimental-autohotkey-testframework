@@ -1,2 +1,8 @@
 ﻿class Config extends Map {
+  /**
+   * @return {UnitTest.Config}
+   */
+  static init() {
+    return UnitTest.Config()
+  }
 }
