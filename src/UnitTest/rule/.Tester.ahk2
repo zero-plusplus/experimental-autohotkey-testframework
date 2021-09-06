@@ -1,2 +1,48 @@
 ﻿class Tester {
+  ;; @tyep {UnitTest}
+  framework := ""
+  ;; @type {Callable}
+  testMethod := ""
+  ;; @type {UnitTest.TestResult[]}
+  results := []
+  ;; @type {UnitTest.TestResult[]}
+  successes := []
+  ;; @type {UnitTest.TestResult[]}
+  failures := []
+
+  /**
+   * @param {UnitTest.rule.Reporter} testMethod
+   * @param {callable} testMethod
+   */
+  __New(framework, testMethod) {
+    this.framework := framework
+    this.testMethod := testMethod
+  }
+  /**
+   * @return {boolean}
+   */
+  hasError() {
+    return 0 < this.failures.length
+  }
+  /**
+   * @param {string} description
+   */
+  result(success, description) {
+    callStack := UnitTest.Util.getCallStack(1)
+    if (description == "") {
+      lineText := UnitTest.Util.readFileLine(callStack[1].file, callStack[1].line)
+      RegExMatch(lineText, "i)^\s*[\w_]+\.(.+)\s*$", &match)
+      description := match[1]
+    }
+    result := UnitTest.TestResult(this.testMethod, success, description, callStack)
+
+    this.results.push(result)
+    if (success) {
+      this.successes.push(result)
+    }
+    else {
+      this.failures.push(result)
+    }
+    UnitTest.Util.tryCall(ObjBindMethod(this.framework.reporter, "result"), result)
+  }
 }

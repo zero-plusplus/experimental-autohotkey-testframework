@@ -67,4 +67,24 @@
     }
     return testClasses
   }
+  /**
+   * @return {UnitTest.rule.Tester}
+   */
+  getTester() {
+    testerName := this.get("tester", "")
+    if (!testerName) {
+      return UnitTest.Assert
+    }
+    return UnitTest.Util.reflectByName(testerName)
+  }
+  /**
+   * @return {UnitTest.rule.Reporter}
+   */
+  getReporter() {
+    reporterName := this.get("reporter", "")
+    if (!reporterName) {
+      return UnitTest.CuiReporter
+    }
+    return UnitTest.Util.reflectByName(reporterName)
+  }
 }

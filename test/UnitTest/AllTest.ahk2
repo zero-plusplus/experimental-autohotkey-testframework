@@ -4,4 +4,5 @@
 #Include ..\..\src\UnitTest\UnitTest.ahk2
 
 class AllTest {
+  #Include tests\UtilTest.ahk2
 }

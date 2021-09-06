@@ -1,2 +1,23 @@
 ﻿class TestResult {
+  ;; @type {callable}
+  testMethod := ""
+  ;; @type {string}
+  message := ""
+  ;; @type {boolean}
+  success := ""
+  ;; @type {Error[]}
+  callStack := ""
+
+  /**
+   * @param {callable} testMethod
+   * @param {boolea} success
+   * @param {string} description
+   * @param {Error[]} callStack
+   */
+  __New(testMethod, success, message, callStack) {
+    this.testMethod := testMethod
+    this.success := success
+    this.message := message
+    this.callStack := callStack
+  }
 }

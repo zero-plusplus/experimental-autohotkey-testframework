@@ -1,2 +1,25 @@
 ﻿class Assert extends UnitTest.rule.Tester {
+  /**
+   * @param {boolean} expression
+   * @param {string} [description := ""]
+   */
+  ok(expression, description := "") {
+    this.result(UnitTest.Util.toBoolean(expression), description)
+  }
+  /**
+   * @param {any} a
+   * @param {any} b
+   * @param {string} [description := ""]
+   */
+  equals(a, b, description := "") {
+    this.result(a == b, description)
+  }
+  /**
+   * @param {any} a
+   * @param {any} b
+   * @param {string} [description := ""]
+   */
+  notEquals(a, b, description := "") {
+    this.result(a !== b, description)
+  }
 }

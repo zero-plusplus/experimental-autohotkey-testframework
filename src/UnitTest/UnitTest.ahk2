@@ -9,6 +9,36 @@ class UnitTest {
     this.config := config
   }
   /**
+   * @param {any} value
+   * @return {boolean}
+   */
+  static isTestClass(value) {
+    if (!(value is Class)) {
+      return false
+    }
+
+    className := UnitTest.Util.tryGet(value, "Prototype").__class
+    if (0 < (className ~= "i)Test$")) {
+      return true
+    }
+    return false
+  }
+  /**
+   * @param {any} value
+   * @return {boolean}
+   */
+  static isTestMethod(value) {
+    if (!UnitTest.Util.isNamedFunc(value)) {
+      return false
+    }
+
+    testMethodName := UnitTest.Util.tryGet(value, "name")
+    if (0 < (testMethodName ~= "i)(^|\.)test")) {
+      return true
+    }
+    return false
+  }
+  /**
    * This method is called only once at startup. The user should not call this method.
    * @internal
    */
@@ -19,7 +49,7 @@ class UnitTest {
     }
 
     ; Remove the arguments to UnitTest and update them to only arguments to the script
-    A_Args := config["scriptArgs"]
+    global A_Args := config["scriptArgs"]
 
     ; Run after the Auto-Exec Section.
     Persistent(true)
@@ -29,12 +59,69 @@ class UnitTest {
    * Run tests.
    */
   run() {
+    this.reporter := (this.config.getReporter())(this)
+    testClasses := this.config.getTestClasses()
+    summary := UnitTest.TestSummary()
+
+    UnitTest.Util.tryCall(ObjBindMethod(this.reporter, "enter"), testClasses)
+    for i, testClass in this.config.getTestClasses() {
+      this.runTestClass(testClass, summary)
+    }
+    UnitTest.Util.tryCall(ObjBindMethod(this.reporter, "exit"), summary)
   }
+  /**
+   * @param {Class} testClass
+   */
+  runTestClass(testClass, summary) {
+    instance := testClass()
+    testClassSummary := UnitTest.TestSummary()
+
+    UnitTest.Util.tryCall(ObjBindMethod(instance, "start"))
+    UnitTest.Util.tryCall(ObjBindMethod(this.reporter, "start"), instance)
+    for key in testClass.Prototype.ownProps() {
+      member := instance.%key%
+      if (!UnitTest.isTestMethod(member)) {
+         continue
+      }
+      testMethod := member
+      this.runTestMethod(instance, testMethod, testClassSummary)
+    }
+
+    for i, member in testClass.ownProps() {
+      if (UnitTest.isTestClass(member)) {
+        this.runTestClass(member, summary)
+      }
+    }
+
+    UnitTest.Util.tryCall(ObjBindMethod(instance, "end"))
+    UnitTest.Util.tryCall(ObjBindMethod(this.reporter, "end"), instance, testClassSummary)
+
+    if (0 < testClassSummary.length) {
+      summary.push(testClassSummary*)
+    }
+  }
+  /**
+   * @param {Class} testInstance
+   * @param {Method} testMethod
+   * @param {UnitTest.TestSummary} results
+   */
+  runTestMethod(testInstance, testMethod, results) {
+    tester := (this.config.getTester())(this, testMethod)
+    results.push(tester)
+
+
+    UnitTest.Util.tryCall(ObjBindMethod(testInstance, "startEach"))
+    UnitTest.Util.tryCall(ObjBindMethod(this.reporter, "startEach"), testMethod)
+    testMethod.call(testInstance, tester)
+    UnitTest.Util.tryCall(ObjBindMethod(testInstance, "endEach"))
+    UnitTest.Util.tryCall(ObjBindMethod(this.reporter, "endEach"), tester)
+  }
+
   #Include .Assert.ahk2
   #Include .Config.ahk2
   #Include .CuiReporter.ahk2
   #Include .TestResult.ahk2
-  #Include .TestResults.ahk2
+  #Include .TestSummary.ahk2
   #Include ..\common\Util.ahk2
   #Include rule\rule.ahk2
 }

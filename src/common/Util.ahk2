@@ -1,5 +1,57 @@
 ﻿class Util {
   /**
+   * @param {any} value
+   * @return {boolean}
+   */
+  static isNamedFunc(value) {
+    if (value is Func && UnitTest.Util.tryGet(value, "name")) {
+      return true
+    }
+    return false
+  }
+  /**
+   * @param {string} str
+   * @param {number} count
+   */
+  static repeatStr(str, count) {
+    repeated := ""
+    Loop count {
+      repeated .= str
+    }
+    return repeated
+  }
+  /**
+   * @param {string} str
+   * @return {string[]}
+   */
+  static splitLines(str) {
+    str := StrReplace(str, "`r`n", "`n")
+    return StrSplit(str, "`n")
+  }
+  /**
+   * @param {string} str
+   * @param {number} indentSize
+   */
+  static indentStr(str, indentSize) {
+    str := StrReplace(str, "`r`n", "`n")
+    indent := UnitTest.Util.repeatStr(" ", indentSize)
+
+    indented := ""
+    for i, line in StrSplit(str, "`n") {
+      indented .= indent . line "`n"
+    }
+
+    indented := RTrim(indented, "`n")
+    return indented
+  }
+  /**
+   * @param {any} value
+   * @return {boolean}
+   */
+  static toBoolean(value) {
+    return !!value
+  }
+  /**
    * @param {string} str
    * @return {string}
    */
@@ -41,6 +93,32 @@
     return flatEntries
   }
   /**
+   * Get the child elements from an object.
+   * Returns `default` if an error occurred.
+   * @param {object} obj
+   * @param {any} key
+   * @param {any} [default := ""] - The value returned if it cannot be retrieved.
+   */
+  static tryGet(obj, key, default := "") {
+    try {
+      if (obj is Map || obj is Array) {
+        return obj[key]
+      }
+      return obj.%key%
+    }
+    return default
+  }
+  /**
+   * @param {callable} callable
+   * @param {any[]} params*
+   * @return {any}
+   */
+  static tryCall(callable, params*) {
+    try {
+      return callable(params*)
+    }
+  }
+  /**
    * @param {string} name
    * @return {any}
    */
@@ -59,6 +137,47 @@
       __root__ := __root__.%__part__%
     }
     return __root__
+  }
+  /**
+   * @param {number} offsetByTop
+   * @return {Error[]}
+   */
+  static getCallStack(offsetByTop := 0) {
+    stacks := []
+
+    startFrame := 2 + offsetByTop
+    while (true) {
+      e := Error("", -(startFrame + (A_Index - 1)))
+      if (e.what == "" || IsNumber(e.what)) {
+        break
+      }
+      stacks.push(e)
+    }
+
+    ; The what properties are off by one, unlike the actual stack properties, so fix them here
+    if (0 < stacks.length) {
+      for i, stack in stacks {
+        if (i + 1 <= stacks.length) {
+          nextStack := stacks[i + 1]
+          stack.what := nextStack.what
+        }
+      }
+      stacks.pop() ; The last stack should be removed because it is covered with information
+    }
+    return stacks
+  }
+  /**
+   * @param {string} file
+   * @param {number} line
+   * @return {string}
+   */
+  static readFileLine(file, line) {
+    file := FileOpen(file, "r")
+    lineText := ""
+    Loop line {
+      lineText := file.readLine()
+    }
+    return lineText
   }
   /**
    * Parses arguments with the following syntax For simplicity, no whitespace is allowed.

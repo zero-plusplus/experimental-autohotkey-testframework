@@ -1,2 +1,104 @@
 ﻿class CuiReporter extends UnitTest.rule.Reporter {
+  exit(summary) {
+    total := summary.getResults().length
+    successes := summary.getSuccesses().length
+    failures := summary.getFailures().length
+    message := Format(">>> {} testing of {} passed, {} failed.", total, successes, failures)
+    this._writeStdOutLine(message)
+  }
+  /**
+   * @param {Class} testClass
+   */
+  start(testClass) {
+    this._writeStdOutLine(testClass.__class, StrSplit(testClass.__class, ".").length - 1)
+  }
+  startEach(testMethod) {
+    testName := RegExReplace(testMethod.name, "i)\.Prototype", "")
+    this._writeStdOutLine(testName, StrSplit(testName, ".").length - 1)
+  }
+;   end(testClass, summary) {
+;     total := summary.getResults().length
+;     successes := summary.getSuccesses().length
+;     failures := summary.getFailures().length
+;     message := Format(">>> {} testing of {} passed, {} failed.", total, successes, failures)
+;     this._writeStdOutLine(message, StrSplit(testClass.__class, ".").length - 1)
+;   }
+;   endEach(tester) {
+;     testName := RegExReplace(tester.testMethod.name, "i)\.Prototype", "")
+;
+;     total := tester.results.length
+;     successes := tester.successes.length
+;     failures := tester.failures.length
+;     message := Format(">>> {} testing of {} passed, {} failed.", total, successes, failures)
+;     this._writeStdOutLine(message, StrSplit(testName, ".").length -1)
+;   }
+  result(result) {
+    testName := RegExReplace(result.testMethod.name, "i)\.Prototype", "")
+    indentSize := StrSplit(testName, ".").length
+    mark := result.success ? "✔" : "❌"
+    message := mark ": " result.message
+    this._writeStdOutLine(message, indentSize)
+
+    if (!result.success) {
+      for i, callInfo in result.callStack {
+        this._writeStdErrLine(callInfo.file ":" callInfo.line " [" callInfo.what "]", indentSize + 1)
+      }
+    }
+  }
+  /**
+   * @private
+   * @param {"stdout" | "stderr"} dest
+   * @param {string} message
+   * @param {number | class | callable} indentLevel
+   */
+  _write(dest, message, indentLevel) {
+    if (UnitTest.isTestClass(indentLevel)) {
+      testClass := indentLevel
+      indentLevel := StrSplit(testClass.__class, ".").length - 1
+    }
+    else if (UnitTest.isTestMethod(indentLevel)) {
+      testMethod := indentLevel
+      indentLevel := StrSplit(RegExReplace(testMethod.name, "i)\.Prototype", ""), ".")
+    }
+
+    message := UnitTest.Util.repeatStr(" ", indentLevel * 2) . message
+    dest := (dest = "stderr") ? "**" : "*"
+    if (dest == "stderr" && isSet(A_DebuggerName) && A_DebuggerName == "Visual Studio Code") {
+      OutputDebug(message)
+      return
+    }
+    FileAppend(message, dest)
+  }
+  /**
+   * @private
+   * @param {string} message
+   * @param {number | class | callable} indentLevel
+   */
+  _writeStdOut(message, indentLevel := 0) {
+    this._write("stdout", message, indentLevel)
+  }
+  /**
+   * @private
+   * @param {string} message
+   * @param {number | class | callable} indentLevel
+   */
+  _writeStdOutLine(message, indentLevel := 0) {
+    this._writeStdOut(message "`n", indentLevel)
+  }
+  /**
+   * @private
+   * @param {string} message
+   * @param {number | class | callable} indentLevel
+   */
+  _writeStdErr(message, indentLevel := 0) {
+    this._write("stderr", message, indentLevel)
+  }
+  /**
+   * @private
+   * @param {string} message
+   * @param {number | class | callable} indentLevel
+   */
+  _writeStdErrLine(message, indentLevel := 0) {
+    this._writeStdErr(message "`n", indentLevel)
+  }
 }

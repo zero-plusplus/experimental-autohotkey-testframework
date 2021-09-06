@@ -1,2 +1,19 @@
 ﻿class Reporter {
+  ;; @type {AtTest}
+  framework := ""
+
+  /**
+   * @param {AtTest} framework
+   */
+  __New(framework) {
+    this.framework := framework
+  }
+  start() {
+  }
+  end() {
+  }
+  startEach() {
+  }
+  endEach() {
+  }
 }
