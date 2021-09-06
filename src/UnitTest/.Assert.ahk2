@@ -1,0 +1,2 @@
+﻿class Assert extends UnitTest.rule.Tester {
+}

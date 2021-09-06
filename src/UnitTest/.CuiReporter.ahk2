@@ -1,0 +1,2 @@
+﻿class CuiReporter extends UnitTest.rule.Reporter {
+}

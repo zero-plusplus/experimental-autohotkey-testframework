@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "AutoHotkey Selected Debug",
+      "type": "autohotkey",
+      "request": "launch",
+      "program": "${file}",
+      "args": [],
+      "useAutoJumpToError": true,
+      "useDebugDirective": true,
+      "usePerfTips": true,
+    },
+    {
+      "name": "AutoHotkey UnitTest/AllTest.ahk2 Debug",
+      "type": "autohotkey",
+      "request": "launch",
+      "program": "${workspaceFolder}/test/UnitTest/AllTest.ahk2",
+      "args": [],
+      "useAutoJumpToError": true,
+      "useDebugDirective": true,
+      "usePerfTips": true,
+    }
+  ]
+}

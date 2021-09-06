@@ -1,0 +1,7 @@
+﻿class UnitTest {
+  #Include .CuiReporter.ahk2
+  #Include .TestResult.ahk2
+  #Include .TestResults.ahk2
+  #Include ..\common\Util.ahk2
+  #Include rule\rule.ahk2
+}

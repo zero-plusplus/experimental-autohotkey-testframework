@@ -1,0 +1,4 @@
+﻿class rule {
+  #Include .Tester.ahk2
+  #Include .Reporter.ahk2
+}
