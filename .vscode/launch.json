@@ -16,7 +16,9 @@
       "type": "autohotkey",
       "request": "launch",
       "program": "${workspaceFolder}/test/UnitTest/AllTest.ahk2",
-      "args": [],
+      "args": [
+        // "--no-auto-run"
+      ],
       "useAutoJumpToError": true,
       "useDebugDirective": true,
       "usePerfTips": true,

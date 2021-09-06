@@ -1,2 +1,99 @@
 ﻿class Util {
+  /**
+   * @param {string} str
+   * @return {string}
+   */
+  static toCamelCase(str) {
+    if (InStr(str, "-")) {
+      words := StrSplit(str, "-")
+      camelCased := words.removeAt(1)
+      for i, word in words {
+        camelCased .= StrTitle(word)
+      }
+      return camelCased
+    }
+    return str
+  }
+  /**
+   * @param {object} obj
+   * @return {Enumerator}
+   */
+  static getEnum(obj) {
+    if (!IsObject(obj)) {
+      return [].__Enum()
+    }
+    if (obj is Class) {
+      return obj.prototype.ownProps()
+    }
+    if (obj is Array || obj is Map) {
+      return obj.__Enum()
+    }
+    return obj.ownProps()
+  }
+  /**
+   * @param {object} obj
+   */
+  static flatEntries(obj) {
+    flatEntries := []
+    for key, value in UnitTest.Util.getEnum(obj) {
+      flatEntries.push(key, value)
+    }
+    return flatEntries
+  }
+  /**
+   * @param {string} name
+   * @return {any}
+   */
+  static reflectByName(__name__) {
+    global ; It is necessary to be careful with the variable names to avoid conflicts with global variables
+
+    if (InStr(__name__, ".") == 0) {
+      local __value__ := %__name__%
+      return __value__
+    }
+
+    local __path__ := StrSplit(__name__, ".")
+    local __rootName__ := __path__.removeAt(1)
+    local __root__ := %__rootName__%
+    for __i__, __part__ in __path__ {
+      __root__ := __root__.%__part__%
+    }
+    return __root__
+  }
+  /**
+   * Parses arguments with the following syntax For simplicity, no whitespace is allowed.
+   * Syntax:
+   * --example-bool
+   * --example-string=string
+   * --example-strings=string1,string2,string3
+   * @return {Map<string, primitive>}
+   */
+  static parseArgs(replacer := "") {
+    global A_Args
+    if (!replacer) {
+      replacer := (values*) => values
+    }
+    argMap := Map()
+    scriptArgs := []
+
+    isArgWithValue := true
+    for i, arg in A_Args {
+      if (arg == "--") {
+        isArgWithValue := false
+        continue
+      }
+      if (isArgWithValue) {
+        RegExMatch(arg, "i)-(-)?(?<name>[^\s=]+)(?:=(?<value>[^\s]+))?", &match)
+        a := match["name"], match["value"] !== "" ? match["value"] : true
+        replaced := replacer(match["name"], match["value"] !== "" ? match["value"] : true)
+        argMap[replaced[1]] := replaced[2]
+      }
+      else {
+        scriptArgs.push(arg)
+      }
+    }
+
+    argMap["scriptArgs"] := scriptArgs
+    return argMap
+  }
 }

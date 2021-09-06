@@ -18,11 +18,12 @@ class UnitTest {
       return
     }
 
-    framework := UnitTest(config)
+    ; Remove the arguments to UnitTest and update them to only arguments to the script
+    A_Args := config["scriptArgs"]
 
     ; Run after the Auto-Exec Section.
     Persistent(true)
-    SetTimer(() => (framework.run(), Persistent(false)), -1)
+    SetTimer(() => (UnitTest(config).run(), Persistent(false)), -1)
   }
   /**
    * Run tests.
