@@ -1,0 +1,18 @@
+{
+  "name": "experimental-autohotkey-testframework",
+  "version": "0.0.0",
+  "description": "Test Framework For AutoHotkey",
+  "homepage": "https://github.com/zero-plusplus/experimental-autohotkey-testframework#readme",
+  "bugs": {
+    "url": "https://github.com/zero-plusplus/experimental-autohotkey-testframework/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zero-plusplus/experimental-autohotkey-testframework.git"
+  },
+  "license": "MIT",
+  "author": "zero-plusplus",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
