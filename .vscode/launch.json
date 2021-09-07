@@ -10,6 +10,7 @@
       "useAutoJumpToError": true,
       "useDebugDirective": true,
       "usePerfTips": true,
+      "port": "9002-9010",
     },
     {
       "name": "AutoHotkey Debug:UnitTest/AllTest.ahk2",
@@ -22,6 +23,7 @@
       "useAutoJumpToError": true,
       "useDebugDirective": true,
       "usePerfTips": true,
+      "port": "9002-9010",
     },
     {
       "name": "Gulp Debug:build",
