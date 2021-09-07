@@ -133,6 +133,8 @@
     local __path__ := StrSplit(__name__, ".")
     local __rootName__ := __path__.removeAt(1)
     local __root__ := %__rootName__%
+    local __i__ := ""
+    local __part__ := ""
     for __i__, __part__ in __path__ {
       __root__ := __root__.%__part__%
     }
