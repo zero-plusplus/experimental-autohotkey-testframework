@@ -1,7 +1,4 @@
-﻿#SingleInstance Force
-#Warn All, StdOut
-#Include ..\..\..\external\SuppressErrorDialog.ahk2
-#Include ..\..\..\src\UnitTest\UnitTest.ahk2
+﻿#Include ..\common.ahk2
 
 class UtilTest {
   testIsNamedFunc(assert) {

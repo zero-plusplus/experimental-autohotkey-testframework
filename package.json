@@ -14,5 +14,19 @@
   "author": "zero-plusplus",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/del": "^4.0.0",
+    "@types/gulp": "^4.0.9",
+    "@types/mkdirp": "^1.0.2",
+    "@zero-plusplus/eslint-my-rules": "^1.0.30",
+    "add": "^2.0.6",
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "mkdirp": "^1.0.4",
+    "source-map-support": "^0.5.19",
+    "strip-bom": "^5.0.0",
+    "ts-node": "^10.2.1",
+    "typescript": "^4.4.2"
   }
 }
