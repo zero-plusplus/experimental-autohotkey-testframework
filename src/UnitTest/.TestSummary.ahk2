@@ -5,7 +5,9 @@
   getResults() {
     results := []
     for i, tester in this {
-      results.push(tester.results*)
+      if (0 < tester.results.length) {
+        results.push(tester.results*)
+      }
     }
     return results
   }
@@ -15,7 +17,9 @@
   getSuccesses() {
     successes := []
     for i, tester in this {
-      successes.push(tester.successes*)
+      if (0 < tester.successes.length) {
+        successes.push(tester.successes*)
+      }
     }
     return successes
   }
