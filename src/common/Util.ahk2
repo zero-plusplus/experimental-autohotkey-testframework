@@ -1,4 +1,4 @@
-﻿class Util {
+class Util {
   /**
    * @param {any} value
    * @return {boolean}
@@ -91,6 +91,18 @@
       flatEntries.push(key, value)
     }
     return flatEntries
+  }
+  /**
+   * @template T
+   * @param {object<any, T>} obj
+   * @param {any} key
+   * @return {T}
+   */
+  static getProp(obj, key) {
+    if (obj is Map || obj is Array) {
+      return obj[key]
+    }
+    return obj.%key%
   }
   /**
    * Get the child elements from an object.

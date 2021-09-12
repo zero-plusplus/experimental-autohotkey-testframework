@@ -1,4 +1,4 @@
-﻿#Include ..\common.ahk2
+#Include ..\common.ahk2
 
 class UtilTest {
   testIsNamedFunc(assert) {
@@ -11,5 +11,10 @@ class UtilTest {
     assert.ok(UnitTest.Util.splitLines("a`nb`nc") is Array)
     assert.equals(UnitTest.Util.splitLines("a`nb`nc").length, 3)
     assert.equals(UnitTest.Util.splitLines("a`r`nb`r`nc").length, 3)
+  }
+  testGetProp(assert) {
+    assert.equals(UnitTest.Util.getProp({ key: "value" }, "key"), "value")
+    assert.equals(UnitTest.Util.getProp(Map("key", "value"), "key"), "value")
+    assert.equals(UnitTest.Util.getProp([ "value" ], 1), "value")
   }
 }
