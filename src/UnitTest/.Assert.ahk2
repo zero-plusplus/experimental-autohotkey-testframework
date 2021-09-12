@@ -26,6 +26,14 @@ class Assert extends UnitTest.rule.Tester {
    * @param {any} b
    * @param {string} [description := ""]
    */
+  equalsIgnoreCase(a, b, description := "") {
+    this.result(UnitTest.Util.equalsIgnoreCase(a, b), description)
+  }
+  /**
+   * @param {any} a
+   * @param {any} b
+   * @param {string} [description := ""]
+   */
   notEquals(a, b, description := "") {
     this.result(a !== b, description)
   }
