@@ -14,6 +14,10 @@ class UtilTest {
     assert.ok(UnitTest.Util.getEnum([]) is Enumerator)
     assert.ok(UnitTest.Util.getEnum(Map()) is Enumerator)
   }
+  testIncludes(assert) {
+    assert.ok(UnitTest.Util.includes([ "a", "b", "c" ], "a"))
+    assert.notOk(UnitTest.Util.includes([ "a", "b", "c" ], "d"))
+  }
   testIsNamedFunc(assert) {
     assert.ok(UnitTest.Util.isNamedFunc(this.testIsNamedFunc))
   }

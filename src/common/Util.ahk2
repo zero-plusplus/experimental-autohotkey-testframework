@@ -109,6 +109,20 @@ class Util {
     return flatEntries
   }
   /**
+   * @param {array} arr
+   * @param {string} str
+   * @param {(a, b) => boolean} equiv
+   */
+  static includes(arr, str, equiv := "") {
+    equiv := equiv || (a, b) => a == b
+    for i, value in arr {
+      if (equiv(str, value)) {
+        return true
+      }
+    }
+    return false
+  }
+  /**
    * @template T
    * @param {object<any, T>} obj
    * @param {any} key
