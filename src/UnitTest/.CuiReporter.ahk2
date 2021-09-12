@@ -1,4 +1,4 @@
-﻿class CuiReporter extends UnitTest.rule.Reporter {
+class CuiReporter extends UnitTest.rule.Reporter {
   exit(summary) {
     total := summary.getResults().length
     successes := summary.getSuccesses().length
@@ -49,9 +49,9 @@
    * @private
    * @param {"stdout" | "stderr"} dest
    * @param {string} message
-   * @param {number | class | callable} indentLevel
+   * @param {number | class | callable} [indentLevel := 0]
    */
-  _write(dest, message, indentLevel) {
+  _write(dest, message, indentLevel := 0) {
     if (UnitTest.isTestClass(indentLevel)) {
       testClass := indentLevel
       indentLevel := StrSplit(testClass.__class, ".").length - 1
