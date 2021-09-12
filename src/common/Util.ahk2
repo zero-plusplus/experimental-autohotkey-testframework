@@ -88,13 +88,13 @@ class Util {
    */
   static getEnum(obj) {
     if (!IsObject(obj)) {
-      return [].__Enum()
+      return [].__Enum(2)
     }
     if (obj is Class) {
       return obj.prototype.ownProps()
     }
     if (obj is Array || obj is Map) {
-      return obj.__Enum()
+      return obj.__Enum(2)
     }
     return obj.ownProps()
   }

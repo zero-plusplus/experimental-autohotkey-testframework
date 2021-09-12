@@ -9,6 +9,11 @@ class UtilTest {
     assert.ok(UnitTest.Util.equalsIgnoreCase("abc", "abc"))
     assert.ok(UnitTest.Util.equalsIgnoreCase("abc", "ABC"))
   }
+  testGetEnum(assert) {
+    assert.ok(UnitTest.Util.getEnum({}) is Enumerator)
+    assert.ok(UnitTest.Util.getEnum([]) is Enumerator)
+    assert.ok(UnitTest.Util.getEnum(Map()) is Enumerator)
+  }
   testIsNamedFunc(assert) {
     assert.ok(UnitTest.Util.isNamedFunc(this.testIsNamedFunc))
   }
