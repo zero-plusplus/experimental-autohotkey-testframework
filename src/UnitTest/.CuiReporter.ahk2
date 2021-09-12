@@ -10,11 +10,14 @@
    * @param {Class} testClass
    */
   start(testClass) {
-    this._writeStdOutLine(testClass.__class, StrSplit(testClass.__class, ".").length - 1)
+    namePathArray := StrSplit(testClass.__class, ".")
+    testName := namePathArray.pop()
+    this._writeStdOutLine(testName, namePathArray.length)
   }
   startEach(testMethod) {
-    testName := RegExReplace(testMethod.name, "i)\.Prototype", "")
-    this._writeStdOutLine(testName, StrSplit(testName, ".").length - 1)
+    namePathArray := StrSplit(testMethod.name, ".")
+    testName := namePathArray.pop()
+    this._writeStdOutLine(testName, namePathArray.length - 1)
   }
 ;   end(testClass, summary) {
 ;     total := summary.getResults().length
