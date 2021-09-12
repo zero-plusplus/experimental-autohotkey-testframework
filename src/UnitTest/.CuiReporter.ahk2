@@ -17,7 +17,7 @@
   startEach(testMethod) {
     namePathArray := StrSplit(testMethod.name, ".")
     testName := namePathArray.pop()
-    this._writeStdOutLine(testName, namePathArray.length - 1)
+    this._writeStdOutLine("[" testName "]", namePathArray.length - 1)
   }
 ;   end(testClass, summary) {
 ;     total := summary.getResults().length
