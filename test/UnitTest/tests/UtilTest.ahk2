@@ -1,6 +1,10 @@
 #Include ..\common.ahk2
 
 class UtilTest {
+  testEquals(assert) {
+    assert.ok(UnitTest.Util.equals("abc", "abc"))
+    assert.notOk(UnitTest.Util.equals("abc", "Abc"))
+  }
   testIsNamedFunc(assert) {
     assert.ok(UnitTest.Util.isNamedFunc(this.testIsNamedFunc))
   }

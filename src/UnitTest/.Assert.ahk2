@@ -1,4 +1,4 @@
-﻿class Assert extends UnitTest.rule.Tester {
+class Assert extends UnitTest.rule.Tester {
   /**
    * @param {boolean} expression
    * @param {string} [description := ""]
@@ -12,7 +12,7 @@
    * @param {string} [description := ""]
    */
   equals(a, b, description := "") {
-    this.result(a == b, description)
+    this.result(UnitTest.Util.equals(a, b), description)
   }
   /**
    * @param {any} a
