@@ -5,6 +5,10 @@ class UtilTest {
     assert.ok(UnitTest.Util.equals("abc", "abc"))
     assert.notOk(UnitTest.Util.equals("abc", "Abc"))
   }
+  testEqualsIgnoreCase(assert) {
+    assert.ok(UnitTest.Util.equalsIgnoreCase("abc", "abc"))
+    assert.ok(UnitTest.Util.equalsIgnoreCase("abc", "ABC"))
+  }
   testIsNamedFunc(assert) {
     assert.ok(UnitTest.Util.isNamedFunc(this.testIsNamedFunc))
   }

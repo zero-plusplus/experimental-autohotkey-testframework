@@ -18,6 +18,14 @@ class Util {
     return a == b
   }
   /**
+   * @param {any} a
+   * @param {any} b
+   * @return {boolean}
+   */
+  static equalsIgnoreCase(a, b) {
+    return a = b
+  }
+  /**
    * @param {string} str
    * @param {number} count
    */
