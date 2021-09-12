@@ -4,7 +4,7 @@ class Util {
    * @return {boolean}
    */
   static isNamedFunc(value) {
-    if (value is Func && UnitTest.Util.tryGet(value, "name")) {
+    if (value is Func && UnitTest.Util.tryGetProp(value, "name")) {
       return true
     }
     return false
@@ -111,12 +111,9 @@ class Util {
    * @param {any} key
    * @param {any} [default := ""] - The value returned if it cannot be retrieved.
    */
-  static tryGet(obj, key, default := "") {
+  static tryGetProp(obj, key, default := "") {
     try {
-      if (obj is Map || obj is Array) {
-        return obj[key]
-      }
-      return obj.%key%
+      return this.getProp(obj, key) || default
     }
     return default
   }

@@ -17,7 +17,7 @@ class UnitTest {
       return false
     }
 
-    className := UnitTest.Util.tryGet(value, "Prototype").__class
+    className := UnitTest.Util.tryGetProp(value, "Prototype").__class
     if (0 < (className ~= "i)Test$")) {
       return true
     }
@@ -32,7 +32,7 @@ class UnitTest {
       return false
     }
 
-    testMethodName := UnitTest.Util.tryGet(value, "name")
+    testMethodName := UnitTest.Util.tryGetProp(value, "name")
     if (0 < (testMethodName ~= "i)(^|\.)test")) {
       return true
     }

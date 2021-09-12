@@ -17,4 +17,7 @@ class UtilTest {
     assert.equals(UnitTest.Util.getProp(Map("key", "value"), "key"), "value")
     assert.equals(UnitTest.Util.getProp([ "value" ], 1), "value")
   }
+  testTryGetProp(assert) {
+    assert.equals(UnitTest.Util.tryGetProp({ key: "value" }, "unknown", "default"), "default")
+  }
 }
