@@ -7,6 +7,13 @@ class Assert extends UnitTest.rule.Tester {
     this.result(UnitTest.Util.toBoolean(expression), description)
   }
   /**
+   * @param {boolean} expression
+   * @param {string} [description := ""]
+   */
+  notOk(expression, description := "") {
+    this.result(!expression, description)
+  }
+  /**
    * @param {any} a
    * @param {any} b
    * @param {string} [description := ""]
