@@ -10,6 +10,7 @@
       "useAutoJumpToError": true,
       "useDebugDirective": true,
       "usePerfTips": true,
+      "openFileOnExit": "${file}",
       "port": "9002-9010",
     },
     {
@@ -23,6 +24,7 @@
       "useAutoJumpToError": true,
       "useDebugDirective": true,
       "usePerfTips": true,
+      "openFileOnExit": "${file}",
       "port": "9002-9010",
     },
     {
