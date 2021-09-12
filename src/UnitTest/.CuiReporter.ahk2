@@ -1,10 +1,10 @@
-class CuiReporter extends UnitTest.rule.Reporter {
+﻿class CuiReporter extends UnitTest.rule.Reporter {
   exit(summary) {
     total := summary.getResults().length
     successes := summary.getSuccesses().length
     failures := summary.getFailures().length
     message := Format(">>> {} testing of {} passed, {} failed.", total, successes, failures)
-    this._writeStdOutLine(message)
+    this._write(0 < failures ? "stderr" : "stdout", message)
   }
   /**
    * @param {Class} testClass
