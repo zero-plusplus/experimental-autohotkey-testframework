@@ -1,4 +1,4 @@
-#Include ..\common.ahk2
+﻿#Include ..\common.ahk2
 
 class UtilTest {
   testEquals(assert) {
@@ -13,6 +13,11 @@ class UtilTest {
     assert.ok(UnitTest.Util.getEnum({}) is Enumerator)
     assert.ok(UnitTest.Util.getEnum([]) is Enumerator)
     assert.ok(UnitTest.Util.getEnum(Map()) is Enumerator)
+  }
+  testGetProp(assert) {
+    assert.equals(UnitTest.Util.getProp({ key: "value" }, "key"), "value")
+    assert.equals(UnitTest.Util.getProp(Map("key", "value"), "key"), "value")
+    assert.equals(UnitTest.Util.getProp([ "value" ], 1), "value")
   }
   testIncludes(assert) {
     assert.ok(UnitTest.Util.includes([ "a", "b", "c" ], "a"))
@@ -33,11 +38,6 @@ class UtilTest {
     assert.ok(UnitTest.Util.splitLines("a`nb`nc") is Array)
     assert.equals(UnitTest.Util.splitLines("a`nb`nc").length, 3)
     assert.equals(UnitTest.Util.splitLines("a`r`nb`r`nc").length, 3)
-  }
-  testGetProp(assert) {
-    assert.equals(UnitTest.Util.getProp({ key: "value" }, "key"), "value")
-    assert.equals(UnitTest.Util.getProp(Map("key", "value"), "key"), "value")
-    assert.equals(UnitTest.Util.getProp([ "value" ], 1), "value")
   }
   testTryGetProp(assert) {
     assert.equals(UnitTest.Util.tryGetProp({ key: "value" }, "unknown", "default"), "default")
