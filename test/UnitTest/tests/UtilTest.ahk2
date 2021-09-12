@@ -21,6 +21,11 @@ class UtilTest {
   testIsNamedFunc(assert) {
     assert.ok(UnitTest.Util.isNamedFunc(this.testIsNamedFunc))
   }
+  testOwnKeys(assert) {
+    assert.equals(UnitTest.Util.ownKeys([ "a", "b", "c"])[1], 1)
+    assert.equals(UnitTest.Util.ownKeys({ key: "value" })[1], "key")
+    assert.equals(UnitTest.Util.ownKeys(Map("key", "value"))[1], "key")
+  }
   testRepeatStr(assert) {
     assert.equals(UnitTest.Util.repeatStr("a", 3), "aaa")
   }
