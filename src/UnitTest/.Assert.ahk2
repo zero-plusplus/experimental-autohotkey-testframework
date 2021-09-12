@@ -1,4 +1,4 @@
-class Assert extends UnitTest.rule.Tester {
+﻿class Assert extends UnitTest.rule.Tester {
   /**
    * @param {boolean} expression
    * @param {string} [description := ""]
@@ -52,5 +52,13 @@ class Assert extends UnitTest.rule.Tester {
    */
   notEqualsIgnoreCase(a, b, description := "") {
     this.result(!UnitTest.Util.equalsIgnoreCase(a, b), description)
+  }
+  /**
+   * @param {any} a
+   * @param {any} b
+   * @param {string} [description := ""]
+   */
+  notDeepEquals(a, b, description := "") {
+    this.result(!UnitTest.Util.deepEquals(a, b), description)
   }
 }
