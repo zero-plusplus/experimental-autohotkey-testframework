@@ -1,4 +1,4 @@
-class Util {
+﻿class Util {
   /**
    * @param {any} value
    * @return {boolean}
@@ -71,6 +71,14 @@ class Util {
         }
     }
     return true
+  }
+  /**
+   * @param {any} a
+   * @param {any} b
+   * @return {boolean}
+   */
+  static deepEqualsIgnoreCase(a, b) {
+    return this.deepEquals(a, b, (a, b) => a = b)
   }
   /**
    * @param {string} str

@@ -6,6 +6,10 @@ class UtilTest {
     assert.notOk(UnitTest.Util.deepEquals([ "abc", "edf" ], [ "ABC", "EDF" ]))
     assert.ok(UnitTest.Util.deepEquals({ key: "value", nest: [ "value", "value2"] }, { key: "value", nest: [ "value", "value2"] }))
   }
+  testDeepEqualsIgnoreCase(assert) {
+    assert.ok(UnitTest.Util.deepEqualsIgnoreCase([ "abc", "edf" ], [ "abc", "edf" ]))
+    assert.ok(UnitTest.Util.deepEqualsIgnoreCase([ "abc", "edf" ], [ "ABC", "EDF" ]))
+  }
   testEquals(assert) {
     assert.ok(UnitTest.Util.equals("abc", "abc"))
     assert.notOk(UnitTest.Util.equals("abc", "Abc"))
