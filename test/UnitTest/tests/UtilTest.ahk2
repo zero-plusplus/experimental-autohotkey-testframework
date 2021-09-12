@@ -1,6 +1,11 @@
-﻿#Include ..\common.ahk2
+#Include ..\common.ahk2
 
 class UtilTest {
+  testDeepEquals(assert) {
+    assert.ok(UnitTest.Util.deepEquals([ "abc", "edf" ], [ "abc", "edf" ]))
+    assert.notOk(UnitTest.Util.deepEquals([ "abc", "edf" ], [ "ABC", "EDF" ]))
+    assert.ok(UnitTest.Util.deepEquals({ key: "value", nest: [ "value", "value2"] }, { key: "value", nest: [ "value", "value2"] }))
+  }
   testEquals(assert) {
     assert.ok(UnitTest.Util.equals("abc", "abc"))
     assert.notOk(UnitTest.Util.equals("abc", "Abc"))

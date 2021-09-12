@@ -26,6 +26,53 @@ class Util {
     return a = b
   }
   /**
+   * @param {any} a
+   * @param {any} b
+   * @param {(a, b) => boolean} b?
+   * @return {boolean}
+   */
+  static deepEquals(a, b, equiv := "", _stack := "") {
+    equiv := equiv || (a, b) => a == b
+    _stack := _stack ? _stack : []
+
+    isAnyPrimitive := !(IsObject(a) && IsObject(b))
+    if (isAnyPrimitive) {
+      return equiv(a, b)
+    }
+    else if (equiv(a, b)) {
+        return true
+    }
+
+    isCircular := this.includes(_stack, a)
+    if (isCircular) {
+        return false
+    }
+    _stack.push(a)
+
+    keys_a := this.ownKeys(a)
+    keys_b := this.ownKeys(b)
+
+    if (keys_a.length != keys_b.length) {
+        return false
+    }
+
+    Loop keys_a.length {
+        if (!equiv(keys_a[A_Index], keys_b[A_Index])) {
+            return false
+        }
+    }
+
+    for i, key in keys_a {
+        value_a := this.getProp(a, key)
+        value_b := this.getProp(b, key)
+
+         if (!this.deepEquals(value_a, value_b, equiv, _stack)) {
+            return false
+        }
+    }
+    return true
+  }
+  /**
    * @param {string} str
    * @param {number} count
    */
