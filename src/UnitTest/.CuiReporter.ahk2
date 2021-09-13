@@ -36,7 +36,7 @@
     indentSize := StrSplit(testName, ".").length
     message := Format(">>> Error: {}", err.message)
     if (err.hasOwnProp("extra") && err.extra) {
-      message .= ">>> Specifically: {}" . err.extra
+      message .= Format("`n>>> Specifically: {}", err.extra)
     }
     this._writeStdErrLine(message, indentSize)
 
