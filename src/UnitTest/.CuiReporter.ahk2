@@ -4,7 +4,7 @@
     successes := summary.getSuccesses().length
     failures := summary.getFailures().length
     message := Format(">>> {} testing of {} passed, {} failed.", total, successes, failures)
-    this._write(0 < failures ? "stderr" : "stdout", message)
+    this._writeLine(0 < failures ? "stderr" : "stdout", message)
   }
   /**
    * @param {Class} testClass
@@ -49,7 +49,7 @@
     indentSize := StrSplit(testName, ".").length
     mark := result.success ? "✔" : "❌"
     message := mark ": " result.message
-    this._writeStdOutLine(message, indentSize)
+    this._writeLine(result.success ? "stdout" : "stderr", message, indentSize)
 
     if (!result.success) {
       for i, callInfo in result.callStack {
@@ -80,6 +80,15 @@
       return
     }
     FileAppend(message, dest)
+  }
+  /**
+   * @private
+   * @param {"stdout" | "stderr"} dest
+   * @param {string} message
+   * @param {number | class | callable} indentLevel
+   */
+  _writeLine(dest, message, indentLevel := 0) {
+    this._write(dest, message "`n", indentLevel)
   }
   /**
    * @private
