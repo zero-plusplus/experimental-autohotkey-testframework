@@ -109,12 +109,21 @@ class UnitTest {
     tester := (this.config.getTester())(this, testMethod)
     results.push(tester)
 
+    try {
+      UnitTest.Util.tryCall(ObjBindMethod(testInstance, "startEach"))
+      UnitTest.Util.tryCall(ObjBindMethod(this.reporter, "startEach"), testMethod)
+      testMethod.call(testInstance, tester)
+      UnitTest.Util.tryCall(ObjBindMethod(testInstance, "endEach"))
+      UnitTest.Util.tryCall(ObjBindMethod(this.reporter, "endEach"), tester)
+    }
+    catch Error as e {
+      tester.error := e
+      tester.error.callstack := UnitTest.Util.getCallStack(1)
+      tester.error.callstack.insertAt(1, e)
 
-    UnitTest.Util.tryCall(ObjBindMethod(testInstance, "startEach"))
-    UnitTest.Util.tryCall(ObjBindMethod(this.reporter, "startEach"), testMethod)
-    testMethod.call(testInstance, tester)
-    UnitTest.Util.tryCall(ObjBindMethod(testInstance, "endEach"))
-    UnitTest.Util.tryCall(ObjBindMethod(this.reporter, "endEach"), tester)
+      UnitTest.Util.tryCall(ObjBindMethod(testInstance, "endEach"))
+      UnitTest.Util.tryCall(ObjBindMethod(this.reporter, "endEach"), tester)
+    }
   }
 
   #Include .Assert.ahk2

@@ -9,6 +9,8 @@
   successes := []
   ;; @type {UnitTest.TestResult[]}
   failures := []
+  ;; @type {Error | ""}
+  error := ""
 
   /**
    * @param {UnitTest.rule.Reporter} testMethod

@@ -26,15 +26,24 @@
 ;     message := Format(">>> {} testing of {} passed, {} failed.", total, successes, failures)
 ;     this._writeStdOutLine(message, StrSplit(testClass.__class, ".").length - 1)
 ;   }
-;   endEach(tester) {
-;     testName := RegExReplace(tester.testMethod.name, "i)\.Prototype", "")
-;
-;     total := tester.results.length
-;     successes := tester.successes.length
-;     failures := tester.failures.length
-;     message := Format(">>> {} testing of {} passed, {} failed.", total, successes, failures)
-;     this._writeStdOutLine(message, StrSplit(testName, ".").length -1)
-;   }
+  endEach(tester) {
+    if (!tester.error) {
+      return
+    }
+
+    err := tester.error
+    testName := RegExReplace(tester.testMethod.name, "i)\.Prototype", "")
+    indentSize := StrSplit(testName, ".").length
+    message := Format(">>> Error: {}", err.message)
+    if (err.hasOwnProp("extra") && err.extra) {
+      message .= ">>> Specifically: {}" . err.extra
+    }
+    this._writeStdErrLine(message, indentSize)
+
+    for i, callInfo in err.callStack {
+      this._writeStdErrLine(callInfo.file ":" callInfo.line " [" callInfo.what "]", indentSize + 1)
+    }
+  }
   result(result) {
     testName := RegExReplace(result.testMethod.name, "i)\.Prototype", "")
     indentSize := StrSplit(testName, ".").length
