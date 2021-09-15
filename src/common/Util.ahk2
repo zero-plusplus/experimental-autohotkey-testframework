@@ -225,6 +225,19 @@
     }
   }
   /**
+   * @template T
+   * @param {(params*) => T} callable
+   * @param {any[]} params*
+   * @return {T}
+   */
+  static invokeCallback(callable, params*) {
+    args := []
+    Loop callable.maxParams {
+      args.push(params[A_Index])
+    }
+    return callable.call(args*)
+  }
+  /**
    * @param {string} name
    * @return {any}
    */

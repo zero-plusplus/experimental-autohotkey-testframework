@@ -112,7 +112,7 @@ class UnitTest {
     try {
       UnitTest.Util.tryCall(ObjBindMethod(testInstance, "startEach"))
       UnitTest.Util.tryCall(ObjBindMethod(this.reporter, "startEach"), testMethod)
-      testMethod.call(testInstance, tester)
+      UnitTest.Util.invokeCallback(testMethod, testInstance, tester)
     }
     catch Error as err {
       errorMessage := Format("Error: {}", err.message)
