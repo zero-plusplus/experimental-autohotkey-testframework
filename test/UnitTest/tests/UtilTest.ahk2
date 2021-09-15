@@ -27,6 +27,8 @@ class UtilTest {
     assert.equals(UnitTest.Util.getProp({ key: "value" }, "key"), "value")
     assert.equals(UnitTest.Util.getProp(Map("key", "value"), "key"), "value")
     assert.equals(UnitTest.Util.getProp([ "value" ], 1), "value")
+
+    assert.throws(() => UnitTest.Util.getProp({ key: "value" }, "unknown"))
   }
   testIncludes(assert) {
     assert.ok(UnitTest.Util.includes([ "a", "b", "c" ], "a"))

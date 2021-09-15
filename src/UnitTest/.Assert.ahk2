@@ -61,4 +61,16 @@
   notDeepEquals(actual, expected, description := "") {
     this.result(!UnitTest.Util.deepEquals(actual, expected), description)
   }
+  /**
+   * @param {(params*) => any} callable
+   * @param {string} [description := ""]
+   */
+  throws(callable, description := "") {
+    try {
+      callable()
+      this.result(false, description)
+      return
+    }
+    this.result(true, description)
+  }
 }
