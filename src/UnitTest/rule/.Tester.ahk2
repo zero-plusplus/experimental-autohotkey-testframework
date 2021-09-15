@@ -32,9 +32,12 @@
    * @param {Error} err?
    */
   result(success, description, err := "") {
-    callstack := UnitTest.Util.getCallStack(1)
+    callstack := []
     if (err) {
-      callstack.insertAt(1, err)
+      callstack.push(err, UnitTest.Util.getCallStack()*)
+    }
+    else {
+      callstack.push(UnitTest.Util.getCallStack(1)*)
     }
 
     if (description == "") {
