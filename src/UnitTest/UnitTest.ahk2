@@ -119,7 +119,7 @@ class UnitTest {
       if (err.hasOwnProp("extra") && err.extra) {
         errorMessage .= Format(" - <{}>", err.extra)
       }
-      tester.result(false, errorMessage, err)
+      tester.result(false, "An exception occurred during testing.", "No exception will be thrown during testing.", errorMessage, err)
     }
 
     UnitTest.Util.tryCall(ObjBindMethod(testInstance, "endEach"))

@@ -323,4 +323,69 @@
     argMap["scriptArgs"] := scriptArgs
     return argMap
   }
+  /**
+   * @param {any} value
+   * @return {string}
+   */
+  class stringify {
+    static call(value) {
+      if (value is String) {
+        return this.string(value)
+      }
+      if (value is Number) {
+        return this.number(value)
+      }
+      if (value is Array) {
+        return this.array(value)
+      }
+      if (value is Map) {
+        return this.map(value)
+      }
+      return this.object(value)
+    }
+    static string(str) {
+      return Format('"{}"', str)
+    }
+    static number(num) {
+      return String(num)
+    }
+    static object(obj) {
+      colon := ": "
+      comma := ", "
+
+      str := "{ "
+      for key, value in obj.ownProps() {
+        str .= key . colon . this.call(value) . comma
+      }
+      str := RTrim(str, comma)
+      str .= " }"
+
+      return str
+    }
+    static array(arr) {
+      comma := ", "
+
+      str := "[ "
+      for i, value in arr {
+        str .= this.call(value) . comma
+      }
+      str := RTrim(str, comma)
+      str .= " ]"
+
+      return str
+    }
+    static map(_map) {
+      pairDelimiter := " => "
+      comma := ", "
+
+      str := "[ "
+      for key, value in _map {
+        str .= this.call(key) . pairDelimiter . this.call(value) . comma
+      }
+      str := RTrim(str, comma)
+      str .= " ]"
+
+      return str
+    }
+  }
 }

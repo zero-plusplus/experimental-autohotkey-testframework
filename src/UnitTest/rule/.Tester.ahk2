@@ -28,10 +28,12 @@
   }
   /**
    * @param {boolean} success
+   * @param {any} actual
+   * @param {any} expected
    * @param {string} description
    * @param {Error} err?
    */
-  result(success, description, err := "") {
+  result(success, actual, expected, description, err := "") {
     callstack := []
     if (err) {
       callstack.push(err, UnitTest.Util.getCallStack()*)
@@ -45,6 +47,11 @@
       RegExMatch(lineText, "i)^\s*[\w_]+\.(.+)\s*$", &match)
       description := match[1]
     }
+    if (!success) {
+      additionalDescription := Format("`nactual:   {}`nexpected: {}", UnitTest.Util.stringify(actual), UnitTest.Util.stringify(expected))
+      description .= UnitTest.Util.indentStr(additionalDescription, 2)
+    }
+
     result := UnitTest.TestResult(this.testMethod, success, description, callStack)
 
     this.results.push(result)

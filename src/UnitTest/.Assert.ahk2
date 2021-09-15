@@ -4,14 +4,16 @@
    * @param {string} [description := ""]
    */
   ok(expression, description := "") {
-    this.result(UnitTest.Util.toBoolean(expression), description)
+    success := UnitTest.Util.toBoolean(expression)
+    this.result(success, expression, true, description)
   }
   /**
    * @param {boolean} expression
    * @param {string} [description := ""]
    */
   notOk(expression, description := "") {
-    this.result(!expression, description)
+    success := !expression
+    this.result(success, expression, false, description)
   }
   /**
    * @param {any} actual
@@ -19,7 +21,8 @@
    * @param {string} [description := ""]
    */
   equals(actual, expected, description := "") {
-    this.result(UnitTest.Util.equals(actual, expected), description)
+    success := UnitTest.Util.equals(actual, expected)
+    this.result(success, actual, expected, description)
   }
   /**
    * @param {any} a
@@ -27,7 +30,8 @@
    * @param {string} [description := ""]
    */
   equalsIgnoreCase(actual, expected, description := "") {
-    this.result(UnitTest.Util.equalsIgnoreCase(actual, expected), description)
+    success := UnitTest.Util.equalsIgnoreCase(actual, expected)
+    this.result(success, actual, expected, description)
   }
   /**
    * @param {any} actual
@@ -35,7 +39,8 @@
    * @param {string} [description := ""]
    */
   deepEquals(actual, expected, description := "") {
-    this.result(UnitTest.Util.deepEquals(actual, expected), description)
+    success := UnitTest.Util.deepEquals(actual, expected)
+    this.result(success, actual, expected, description)
   }
   /**
    * @param {any} actual
@@ -43,7 +48,8 @@
    * @param {string} [description := ""]
    */
   notEquals(actual, expected, description := "") {
-    this.result(actual !== expected, description)
+    success := actual !== expected
+    this.result(success, actual, expected, description)
   }
   /**
    * @param {any} actual
@@ -51,7 +57,8 @@
    * @param {string} [description := ""]
    */
   notEqualsIgnoreCase(actual, expected, description := "") {
-    this.result(!UnitTest.Util.equalsIgnoreCase(actual, expected), description)
+    success := !UnitTest.Util.equalsIgnoreCase(actual, expected)
+    this.result(success, actual, expected, description)
   }
   /**
    * @param {any} actual
@@ -59,7 +66,8 @@
    * @param {string} [description := ""]
    */
   notDeepEquals(actual, expected, description := "") {
-    this.result(!UnitTest.Util.deepEquals(actual, expected), description)
+    success := !UnitTest.Util.deepEquals(actual, expected)
+    this.result(success, actual, expected, description)
   }
   /**
    * @param {(params*) => any} callable
@@ -68,9 +76,9 @@
   throws(callable, description := "") {
     try {
       callable()
-      this.result(false, description)
+      this.result(false, "No exception was raised.", "Exception was raised.", description)
       return
     }
-    this.result(true, description)
+    this.result(true, "Exception was raised.", "Exception was raised.", description)
   }
 }

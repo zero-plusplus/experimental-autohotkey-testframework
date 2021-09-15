@@ -58,12 +58,11 @@
     }
   }
   /**
-   * @private
-   * @param {"stdout" | "stderr"} dest
-   * @param {string} message
+   * @param {string} str
    * @param {number | class | callable} [indentLevel := 0]
+   * @return {string}
    */
-  _write(dest, message, indentLevel := 0) {
+  _createMessage(str, indentLevel := 0) {
     if (UnitTest.isTestClass(indentLevel)) {
       testClass := indentLevel
       indentLevel := StrSplit(testClass.__class, ".").length - 1
@@ -72,8 +71,15 @@
       testMethod := indentLevel
       indentLevel := StrSplit(RegExReplace(testMethod.name, "i)\.Prototype", ""), ".")
     }
-
-    message := UnitTest.Util.repeatStr(" ", indentLevel * 2) . message
+    message := UnitTest.Util.indentStr(str, indentLevel * 2)
+    return message
+  }
+  /**
+   * @private
+   * @param {"stdout" | "stderr"} dest
+   * @param {string} message
+   */
+  _sendMessage(dest, message) {
     dest := (dest = "stderr") ? "**" : "*"
     if (dest == "stderr" && isSet(A_DebuggerName) && A_DebuggerName == "Visual Studio Code") {
       OutputDebug(message)
@@ -85,10 +91,21 @@
    * @private
    * @param {"stdout" | "stderr"} dest
    * @param {string} message
+   * @param {number | class | callable} [indentLevel := 0]
+   */
+  _write(dest, message, indentLevel := 0) {
+    message := this._createMessage(message, indentLevel)
+    this._sendMessage(dest, message)
+  }
+  /**
+   * @private
+   * @param {"stdout" | "stderr"} dest
+   * @param {string} message
    * @param {number | class | callable} indentLevel
    */
   _writeLine(dest, message, indentLevel := 0) {
-    this._write(dest, message "`n", indentLevel)
+    message := this._createMessage(message, indentLevel) "`n"
+    this._sendMessage(dest, message)
   }
   /**
    * @private
@@ -96,7 +113,8 @@
    * @param {number | class | callable} indentLevel
    */
   _writeStdOut(message, indentLevel := 0) {
-    this._write("stdout", message, indentLevel)
+    message := this._createMessage(message, indentLevel)
+    this._sendMessage("stdout", message)
   }
   /**
    * @private
@@ -104,7 +122,8 @@
    * @param {number | class | callable} indentLevel
    */
   _writeStdOutLine(message, indentLevel := 0) {
-    this._writeStdOut(message "`n", indentLevel)
+    message := this._createMessage(message, indentLevel) "`n"
+    this._sendMessage("stdout", message)
   }
   /**
    * @private
@@ -112,7 +131,8 @@
    * @param {number | class | callable} indentLevel
    */
   _writeStdErr(message, indentLevel := 0) {
-    this._write("stderr", message, indentLevel)
+    message := this._createMessage(message, indentLevel)
+    this._sendMessage("stderr", message)
   }
   /**
    * @private
@@ -120,6 +140,7 @@
    * @param {number | class | callable} indentLevel
    */
   _writeStdErrLine(message, indentLevel := 0) {
-    this._writeStdErr(message "`n", indentLevel)
+    message := this._createMessage(message, indentLevel) "`n"
+    this._sendMessage("stderr", message)
   }
 }

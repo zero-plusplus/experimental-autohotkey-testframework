@@ -53,4 +53,7 @@ class UtilTest {
   testTryGetProp(assert) {
     assert.equals(UnitTest.Util.tryGetProp({ key: "value" }, "unknown", "default"), "default")
   }
+  testStringify(assert) {
+    assert.equals(UnitTest.Util.stringify({ a: { b: [ Map("abc", 1) ] } }), '{ a: { b: [ [ "abc" => 1 ] ] } }')
+  }
 }
