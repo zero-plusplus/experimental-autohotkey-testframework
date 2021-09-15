@@ -14,51 +14,51 @@
     this.result(!expression, description)
   }
   /**
-   * @param {any} a
-   * @param {any} b
+   * @param {any} actual
+   * @param {any} expected
    * @param {string} [description := ""]
    */
-  equals(a, b, description := "") {
-    this.result(UnitTest.Util.equals(a, b), description)
+  equals(actual, expected, description := "") {
+    this.result(UnitTest.Util.equals(actual, expected), description)
   }
   /**
    * @param {any} a
-   * @param {any} b
+   * @param {any} expected
    * @param {string} [description := ""]
    */
-  equalsIgnoreCase(a, b, description := "") {
-    this.result(UnitTest.Util.equalsIgnoreCase(a, b), description)
+  equalsIgnoreCase(actual, expected, description := "") {
+    this.result(UnitTest.Util.equalsIgnoreCase(actual, expected), description)
   }
   /**
-   * @param {any} a
-   * @param {any} b
+   * @param {any} actual
+   * @param {any} expected
    * @param {string} [description := ""]
    */
-  deepEquals(a, b, description := "") {
-    this.result(UnitTest.Util.deepEquals(a, b), description)
+  deepEquals(actual, expected, description := "") {
+    this.result(UnitTest.Util.deepEquals(actual, expected), description)
   }
   /**
-   * @param {any} a
-   * @param {any} b
+   * @param {any} actual
+   * @param {any} expected
    * @param {string} [description := ""]
    */
-  notEquals(a, b, description := "") {
-    this.result(a !== b, description)
+  notEquals(actual, expected, description := "") {
+    this.result(actual !== expected, description)
   }
   /**
-   * @param {any} a
-   * @param {any} b
+   * @param {any} actual
+   * @param {any} expected
    * @param {string} [description := ""]
    */
-  notEqualsIgnoreCase(a, b, description := "") {
-    this.result(!UnitTest.Util.equalsIgnoreCase(a, b), description)
+  notEqualsIgnoreCase(actual, expected, description := "") {
+    this.result(!UnitTest.Util.equalsIgnoreCase(actual, expected), description)
   }
   /**
-   * @param {any} a
-   * @param {any} b
+   * @param {any} actual
+   * @param {any} expected
    * @param {string} [description := ""]
    */
-  notDeepEquals(a, b, description := "") {
-    this.result(!UnitTest.Util.deepEquals(a, b), description)
+  notDeepEquals(actual, expected, description := "") {
+    this.result(!UnitTest.Util.deepEquals(actual, expected), description)
   }
 }
