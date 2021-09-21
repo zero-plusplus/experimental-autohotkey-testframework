@@ -148,7 +148,7 @@
     if (obj is Class) {
       return obj.prototype.ownProps()
     }
-    if (obj is Array || obj is Map) {
+    if (obj is Array || obj is Map || obj is RegExMatchInfo) {
       return obj.__Enum(2)
     }
     return obj.ownProps()
@@ -351,7 +351,7 @@
       if (value is Array) {
         return this.array(value)
       }
-      if (value is Map) {
+      if (value is Map || value is RegExMatchInfo) {
         return this.map(value)
       }
       return this.object(value)
